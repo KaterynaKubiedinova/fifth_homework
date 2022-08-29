@@ -1,5 +1,5 @@
 function notValid(val) {
-	return typeof(val) !== 'number' || val === Infinity || val === -Infinity || isNaN(val) || val < 1; 
+	return typeof(val) !== 'number' || val === Infinity || val === -Infinity || isNaN(val) || val < 0; 
 }
 
 class Stack {
