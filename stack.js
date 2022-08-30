@@ -1,5 +1,18 @@
 function notValid(val) {
-	return typeof(val) !== 'number' || val === Infinity || val === -Infinity || isNaN(val) || val < 0; 
+  return (
+    typeof val !== "number" ||
+    val === Infinity ||
+    val === -Infinity ||
+    isNaN(val) ||
+    val < 0
+  );
+}
+
+class List {
+  constructor(elem){
+    this.element = elem;
+    this.next = null;
+  }
 }
 
 class Stack {
@@ -8,7 +21,8 @@ class Stack {
 			throw new Error('Ошибка!');
 		}
 
-		this.items = [];
+		this.length = 0;
+		this.head = null;
 		this.maxLength = maxLength;
 
 		this.push = this.push.bind(this);
@@ -17,76 +31,73 @@ class Stack {
 		this.isEmpty = this.isEmpty.bind(this);
 		this.toArray = this.toArray.bind(this);
 	}
-	
+
 	push(elem) {
-		if (this.items.length === this.maxLength) {
-			throw new Error('Ошибка!');
+		if (this.length === this.maxLength) {
+			throw new Error('Ошибка! Стек переполнен!');
 		}
 
-		this.items[this.items.length] = elem;
+		let list = new List(elem);
+    let current;
+
+		current = this.head;
+    list.next = current;
+    this.head = list;
+
+		this.length++;
 	}
 
 	pop() {
-		if (this.items.length === 0) {
-			throw new Error('Ошибка!');
+		if (!this.head) {
+			throw new Error('Ошибка! Cтек пуст!');
 		}
 
-		const prevItem = this.items[this.items.length - 1];
+		let current = this.head; 
+    let elem = current.element;
 
-		this.items.length = this.items.length - 1;
-		
-		return prevItem;
-	}
+    current = current.next;
+    this.head = current;
+    this.length--;
+    
+		return elem;  
+  }
+	
 
 	peek() {
-		if (this.items.length === 0) {
-			return null;
-		}
+		if(this.head){    
+      return this.head.element;
+    }
 
-		return this.items[this.items.length - 1];
-	}
+    return null; 
+  }
 
 	isEmpty() {
-		if (this.items.length === 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.length === 0;
 	}
 
 	toArray() {
-		const newArr = [];
-		
-		function toArr(stack, index) {
-			newArr[index] = stack[index];
-
-			if (index !== 0) {
-				return toArr(stack, index - 1);
-			}
-		}
-
-		toArr(this.items, this.items.length - 1);
-		
-		return newArr;
+		let arr = [];
+    let current = this.head;
+    
+		while(current){
+      arr.unshift(current.element);
+      current = current.next;
+    }
+    
+    return arr;
 	}
 
-	static fromIterable(iterable) {
+static fromIterable(iterable) {
 		if ( !iterable[Symbol.iterator] ) {
-			throw new Error('Ошибка!');
+			throw new Error('Ошибка! Не итерируемая сущность');
 		}
 
 		const newStack = new Stack(iterable.length);
-
-		function fromIter(iter, index) {
-			newStack.push( iter[index] );
-			
-			if (index !== iter.length - 1) {
-				return fromIter(iter, index + 1);
-			}
+		
+		for (let item of iterable) {
+			newStack.push(item);
 		}
-		
-		fromIter(iterable, 0);
-		
+
 		return newStack;
 	}
 }
