@@ -8,7 +8,7 @@ function notValid(val) {
   );
 }
 
-class List {
+class Node {
   constructor(elem){
     this.element = elem;
     this.next = null;
@@ -37,12 +37,12 @@ class Stack {
 			throw new Error('Ошибка! Стек переполнен!');
 		}
 
-		let list = new List(elem);
+		let node = new Node(elem);
     let current;
 
 		current = this.head;
-    list.next = current;
-    this.head = list;
+    node.next = current;
+    this.head = node;
 
 		this.length++;
 	}
@@ -93,7 +93,7 @@ static fromIterable(iterable) {
 		}
 
 		const newStack = new Stack(iterable.length);
-		
+
 		for (let item of iterable) {
 			newStack.push(item);
 		}
