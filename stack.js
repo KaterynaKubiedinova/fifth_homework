@@ -38,11 +38,11 @@ class Stack {
 		}
 
 		let node = new Node(elem);
-    let current;
+    		let current;
 
 		current = this.head;
-    node.next = current;
-    this.head = node;
+    		node.next = current;
+    		this.head = node;
 
 		this.length++;
 	}
@@ -53,23 +53,23 @@ class Stack {
 		}
 
 		let current = this.head; 
-    let elem = current.element;
+    		let elem = current.element;
 
-    current = current.next;
-    this.head = current;
-    this.length--;
+    		current = current.next;
+    		this.head = current;
+    		this.length--;
     
 		return elem;  
-  }
+  	}
 	
 
 	peek() {
 		if(this.head){    
-      return this.head.element;
-    }
+      			return this.head.element;
+    		}
 
-    return null; 
-  }
+    		return null; 
+  	}
 
 	isEmpty() {
 		return this.length === 0;
@@ -77,17 +77,17 @@ class Stack {
 
 	toArray() {
 		let arr = [];
-    let current = this.head;
+    		let current = this.head;
     
 		while(current){
-      arr.unshift(current.element);
-      current = current.next;
-    }
+      			arr.unshift(current.element);
+      			current = current.next;
+    		}
     
-    return arr;
+    		return arr;
 	}
 
-static fromIterable(iterable) {
+	static fromIterable(iterable) {
 		if ( !iterable[Symbol.iterator] ) {
 			throw new Error('Ошибка! Не итерируемая сущность');
 		}
